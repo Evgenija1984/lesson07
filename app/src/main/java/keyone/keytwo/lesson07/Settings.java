@@ -8,9 +8,9 @@ public class Settings {
     public static final String IS_BACK_AS_REMOVE_FRAGMENT = "BackAsRemove";
     public static final String IS_DELETE_FRAGMENT_BEFORE_ADD = "DeleteFragmentBeforeAdd";
 
-    public static boolean IsBackStack;
-    public static boolean IsAddFragment;
-    public static boolean IsBackAsRemove;
-    public static boolean IsDeleteBeforeAdd;
+    public static boolean isBackStack;
+    public static boolean isAddFragment;
+    public static boolean isBackAsRemove;
+    public static boolean isDeleteBeforeAdd;
 
 }
