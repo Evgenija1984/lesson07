@@ -1,5 +1,6 @@
 package keyone.keytwo.lesson07;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,6 +34,32 @@ public class MainActivity extends AppCompatActivity {
         initButtonMain();
         initButtonFavorite();
         initButtonSettings();
+    }
+
+    // переопределяем обработку кликов по пунктам меню
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        switch (id) {
+            case R.id.action_settings:
+                fragmentTransaction.add(R.id.fragment_container, new SettingsFragment());
+                fragmentTransaction.commit();
+                return true;
+            case R.id.action_main:
+                fragmentTransaction.add(R.id.fragment_container, new MainFragment());
+                fragmentTransaction.commit();
+                return true;
+            case R.id.action_favorite:
+                fragmentTransaction.add(R.id.fragment_container, new FavoriteFragment());
+                fragmentTransaction.commit();
+                return true;
+            case R.id.action_search:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initButtonBack() {
