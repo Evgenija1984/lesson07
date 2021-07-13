@@ -27,9 +27,14 @@ public class MainActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
+        initButtonMain();
+        Button buttonFavorite = findViewById(R.id.buttonFavorite);
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+    }
+
+    private void initButtonMain() {
         Button buttonMain = findViewById(R.id.buttonMain);
         buttonMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,10 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.addToBackStack(null);
                 }
                 fragmentTransaction.commit();
-
             }
         });
-        Button buttonFavorite = findViewById(R.id.buttonFavorite);
-        Button buttonSettings = findViewById(R.id.buttonSettings);
     }
 }
