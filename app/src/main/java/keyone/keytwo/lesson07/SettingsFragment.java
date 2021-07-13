@@ -20,10 +20,41 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
+    // вынесли всю работу с кнопками
     private void initView(View view) {
         initSwitchBackStack(view);
+        initSwitchBackAsRemove(view);
+        initSwitchBackDeleteBeforeAdd(view);
     }
 
+    // инициализируем переключатель, отвечающий за удаление фрагмента из стека перед добавлением нового
+    private void initSwitchBackDeleteBeforeAdd(View view) {
+        SwitchCompat switchCompatBackStack = view.findViewById(R.id.switchBackDeleteBeforeAdd);
+        switchCompatBackStack.setChecked(Settings.isDeleteBeforeAdd);
+        switchCompatBackStack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.isDeleteBeforeAdd = isChecked;
+                saveSettings();
+            }
+        });
+    }
+
+    // инициализируем переключатель, отвечающий за работу кнопки Back, как очистителя/удалителя фрагментов
+    private void initSwitchBackAsRemove(View view) {
+        SwitchCompat switchCompatBackStack = view.findViewById(R.id.switchBackAsRemove);
+        switchCompatBackStack.setChecked(Settings.isBackAsRemove);
+        switchCompatBackStack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.isBackAsRemove = isChecked;
+                saveSettings();
+            }
+        });
+
+    }
+
+    // инициализируем переключатель, отвечающий за стек (включен - стек работает, выключен - стек не работает)
     private void initSwitchBackStack(View view) {
         SwitchCompat switchCompatBackStack = view.findViewById(R.id.switchBackStack);
         switchCompatBackStack.setChecked(Settings.isBackStack);
@@ -36,10 +67,13 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+    // сохраняем настройки, чтобы они были доступны после перезагрузки приложения
     private void saveSettings() {
         SharedPreferences shared = requireActivity().getSharedPreferences(Settings.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
         editor.putBoolean(Settings.IS_BACK_STACK_USED, Settings.isBackStack);
+        editor.putBoolean(Settings.IS_DELETE_FRAGMENT_BEFORE_ADD, Settings.isDeleteBeforeAdd);
+        editor.putBoolean(Settings.IS_BACK_AS_REMOVE_FRAGMENT, Settings.isBackAsRemove);
         editor.apply();
     }
 }
