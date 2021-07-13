@@ -23,15 +23,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        initButtonBack();
+        initButtonMain();
+        initButtonFavorite();
+        initButtonSettings();
+    }
+
+    private void initButtonBack() {
         Button buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                if (Settings.isBackAsRemove) {
+                    List<Fragment> fragmentList = fragmentManager.getFragments();
+                    for (int i = 0; i < fragmentList.size(); i++) {
+                        Fragment fragment = fragmentList.get(i);
+                        if (fragment.isVisible()) {
+                            fragmentTransaction.remove(fragment);
+                        }
+                    }
+                } else {
+                    fragmentManager.popBackStack();
+                }
             }
         });
-        initButtonMain();
-        initButtonFavorite();
-        initButtonSettings();
     }
 
     private void initButtonSettings() {
