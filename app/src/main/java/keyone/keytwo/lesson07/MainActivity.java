@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 if (Settings.isBackAsRemove) {
+//                    Log.d("mylogs", "Settings.isBackAsRemove "+Settings.isBackAsRemove);
                     List<Fragment> fragmentList = fragmentManager.getFragments();
                     for (int i = 0; i < fragmentList.size(); i++) {
                         Fragment fragment = fragmentList.get(i);
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     fragmentManager.popBackStack();
                 }
+                fragmentTransaction.commit();
             }
         });
     }
