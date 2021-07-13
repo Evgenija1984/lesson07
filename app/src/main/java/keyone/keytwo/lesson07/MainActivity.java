@@ -31,7 +31,36 @@ public class MainActivity extends AppCompatActivity {
         });
         initButtonMain();
         initButtonFavorite();
+        initButtonSettings();
+    }
+
+    private void initButtonSettings() {
         Button buttonSettings = findViewById(R.id.buttonSettings);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                if (Settings.isDeleteBeforeAdd) {
+                    List<Fragment> fragmentList = fragmentManager.getFragments();
+                    for (int i = 0; i < fragmentList.size(); i++) {
+                        Fragment fragment = fragmentList.get(i);
+                        if (fragment.isVisible()) {
+                            fragmentTransaction.remove(fragment);
+                        }
+                    }
+                }
+                if (Settings.isAddFragment) {
+                    fragmentTransaction.add(R.id.fragment_container, new SettingsFragment());
+                } else {
+                    fragmentTransaction.replace(R.id.fragment_container, new SettingsFragment());
+                }
+                if (Settings.isBackStack) {
+                    fragmentTransaction.addToBackStack(null);
+                }
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     private void initButtonFavorite() {
