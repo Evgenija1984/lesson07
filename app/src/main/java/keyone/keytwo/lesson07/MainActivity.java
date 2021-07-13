@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -43,8 +44,13 @@ public class MainActivity extends AppCompatActivity {
                             fragmentTransaction.remove(fragment);
                         }
                     }
-
                 }
+                if (Settings.isAddFragment) {
+                    fragmentTransaction.add(R.id.fragment_container, new MainFragment());
+                } else {
+                    fragmentTransaction.replace(R.id.fragment_container, new MainFragment());
+                }
+                fragmentTransaction.commit();
             }
         });
         Button buttonFavorite = findViewById(R.id.buttonFavorite);
