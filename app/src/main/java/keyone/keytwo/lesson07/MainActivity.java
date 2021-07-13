@@ -50,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     fragmentTransaction.replace(R.id.fragment_container, new MainFragment());
                 }
+                if (Settings.isBackStack) {
+                    fragmentTransaction.addToBackStack(null);
+                }
                 fragmentTransaction.commit();
+
             }
         });
         Button buttonFavorite = findViewById(R.id.buttonFavorite);
