@@ -34,11 +34,11 @@ public class SettingsFragment extends Fragment {
     // инициализируем радио кнопку, отвечающую за замену фрагментов (замещает)
     private void initRadioReplace(View view) {
         RadioButton radioButtonReplace = view.findViewById(R.id.radioButtonReplace);
-        radioButtonReplace.setChecked(Settings.isAddFragment); // нужно добавить еще одну переменную?
+        radioButtonReplace.setChecked(Settings.isReplaceFragment); // нужно добавить еще одну переменную?
         radioButtonReplace.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Settings.isAddFragment = isChecked;
+                Settings.isReplaceFragment = isChecked;
                 saveSettings();
             }
         });
@@ -47,7 +47,8 @@ public class SettingsFragment extends Fragment {
     // инициализируем радио кнопку, отвечающую за добавление фрагментов (наслаивает)
     private void initRadioAdd(View view) {
         RadioButton radioButtonAdd = view.findViewById(R.id.radioButtonAdd);
-        radioButtonAdd.setChecked(Settings.isAddFragment);
+//        radioButtonAdd.setChecked(Settings.isAddFragment);
+        radioButtonAdd.setChecked(true);
         radioButtonAdd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -106,6 +107,7 @@ public class SettingsFragment extends Fragment {
         editor.putBoolean(Settings.IS_DELETE_FRAGMENT_BEFORE_ADD, Settings.isDeleteBeforeAdd);
         editor.putBoolean(Settings.IS_BACK_AS_REMOVE_FRAGMENT, Settings.isBackAsRemove);
         editor.putBoolean(Settings.IS_ADD_FRAGMENT_USED, Settings.isAddFragment);
+        editor.putBoolean(Settings.IS_REPLACE_FRAGMENT_USED, Settings.isReplaceFragment);
         editor.apply();
     }
 
@@ -114,6 +116,8 @@ public class SettingsFragment extends Fragment {
         Settings.isBackAsRemove = shared.getBoolean(Settings.IS_BACK_AS_REMOVE_FRAGMENT, false);
         Settings.isBackStack = shared.getBoolean(Settings.IS_BACK_STACK_USED, false);
         Settings.isAddFragment = shared.getBoolean(Settings.IS_ADD_FRAGMENT_USED, true);
+//        Settings.isReplaceFragment = !Settings.isAddFragment;
+        Settings.isReplaceFragment = shared.getBoolean(Settings.IS_REPLACE_FRAGMENT_USED, false);
         Settings.isDeleteBeforeAdd = shared.getBoolean(Settings.IS_DELETE_FRAGMENT_BEFORE_ADD, false);
     }
 
