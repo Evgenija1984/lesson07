@@ -30,8 +30,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         initButtonMain();
-        Button buttonFavorite = findViewById(R.id.buttonFavorite);
+        initButtonFavorite();
         Button buttonSettings = findViewById(R.id.buttonSettings);
+    }
+
+    private void initButtonFavorite() {
+        Button buttonFavorite = findViewById(R.id.buttonFavorite);
+        buttonFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                if (Settings.isDeleteBeforeAdd) {
+                    List<Fragment> fragmentList = fragmentManager.getFragments();
+                    for (int i = 0; i < fragmentList.size(); i++) {
+                        Fragment fragment = fragmentList.get(i);
+                        if (fragment.isVisible()) {
+                            fragmentTransaction.remove(fragment);
+                        }
+                    }
+                }
+                if (Settings.isAddFragment) {
+                    fragmentTransaction.add(R.id.fragment_container, new FavoriteFragment());
+                } else {
+                    fragmentTransaction.replace(R.id.fragment_container, new FavoriteFragment());
+                }
+                if (Settings.isBackStack) {
+                    fragmentTransaction.addToBackStack(null);
+                }
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     private void initButtonMain() {
