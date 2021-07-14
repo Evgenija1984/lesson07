@@ -1,9 +1,11 @@
 package keyone.keytwo.lesson07;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolbar, (R.string.open), (R.string.close));
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         setSupportActionBar(toolbar);
         initButtonBack();
         initButtonMain();
