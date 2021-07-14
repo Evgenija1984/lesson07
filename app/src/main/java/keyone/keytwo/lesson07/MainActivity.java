@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,13 +36,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawerLayout, toolbar, (R.string.open), (R.string.close));
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        setSupportActionBar(toolbar);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                return false;
+            }
+        });
+
         initButtonBack();
         initButtonMain();
         initButtonFavorite();
