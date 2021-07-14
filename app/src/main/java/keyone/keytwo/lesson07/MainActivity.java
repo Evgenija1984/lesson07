@@ -2,6 +2,7 @@ package keyone.keytwo.lesson07;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -46,18 +47,16 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (id) {
             case R.id.action_settings:
-                fragmentTransaction.add(R.id.fragment_container, new SettingsFragment());
+                fragmentTransaction.replace(R.id.fragment_container, new SettingsFragment());
                 fragmentTransaction.commit();
                 return true;
             case R.id.action_main:
-                fragmentTransaction.add(R.id.fragment_container, new MainFragment());
+                fragmentTransaction.replace(R.id.fragment_container, new MainFragment());
                 fragmentTransaction.commit();
                 return true;
             case R.id.action_favorite:
-                fragmentTransaction.add(R.id.fragment_container, new FavoriteFragment());
+                fragmentTransaction.replace(R.id.fragment_container, new FavoriteFragment());
                 fragmentTransaction.commit();
-                return true;
-            case R.id.action_search:
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -66,6 +65,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+        MenuItem menuItems = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItems.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 
